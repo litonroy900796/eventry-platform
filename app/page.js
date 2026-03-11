@@ -1,6 +1,7 @@
 import EventList from "@/components/landing/EventList";
 import Header from "@/components/landing/Header";
-import { getAllEvents } from "@/lib/actions/event.action";
+import { getAllEvents } from "@/lib/query";
+
 import Image from "next/image";
 
 export default async function Home() {

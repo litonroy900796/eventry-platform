@@ -1,7 +1,8 @@
 import EventDetails from "@/components/details/EventDetails";
 import EventVenue from "@/components/details/EventVenue";
 import HeroSection from "@/components/details/HeroSection";
-import { getEventById } from "@/lib/actions/event.action";
+import { getEventById } from "@/lib/query";
+
 import React from "react";
 
 async function EventDetail({ params }) {
