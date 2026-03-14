@@ -1,23 +1,48 @@
-import React from "react";
+"use client";
+import { performLogin } from "@/lib/actions/auth.action";
+import React, { useState } from "react";
 
 function LoginForm() {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const formData = new FormData(e.target);
+      const result = await performLogin(formData);
+      console.log("Login successful", result);
+      // router.push("/dashboard");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form className="login-form">
+    <form className="login-form" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email Address</label>
-        <input type="email" name="email" id="email" />
+        <input type="email" name="email" id="email" required />
       </div>
 
       <div>
         <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <input type="password" name="password" id="password" required />
       </div>
+
+      {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
       <button
         type="submit"
-        className="btn-primary w-full mt-4 bg-indigo-600 hover:bg-indigo-800"
+        disabled={loading}
+        className="btn-primary w-full mt-4 bg-indigo-600 hover:bg-indigo-800 disabled:opacity-50"
       >
-        Login
+        {loading ? "Logging in..." : "Login"}
       </button>
     </form>
   );
