@@ -21,10 +21,10 @@ const EventCard = ({ event }) => {
         <p className="text-[#9C9C9C] text-sm mt-1">{event?.location}</p>
         <div className="text-[#737373] text-sm mt-1">
           <span>{event?.interested_ids.length} Interested</span>
-          <span>|</span>
+          <span className="mx-2">|</span>
           <span>{event?.going_ids.length} Going</span>
         </div>
-        <ActionButtons />
+        <ActionButtons eventId={event?.id} event={event} />
       </div>
     </div>
   );
