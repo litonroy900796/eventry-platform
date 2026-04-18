@@ -1,8 +1,12 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
 import { performLogin } from "@/lib/actions/auth.action";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function LoginForm() {
+  const { setAuth } = useAuth();
+  const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -14,8 +18,13 @@ function LoginForm() {
     try {
       const formData = new FormData(e.target);
       const result = await performLogin(formData);
-      console.log("Login successful", result);
-      // router.push("/dashboard");
+      console.log("Login successful:", result, formData);
+      if (result) {
+        setAuth(result);
+        router.push("/");
+      } else {
+        setError("Please provide a valid login credential");
+      }
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {
