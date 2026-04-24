@@ -7,6 +7,8 @@ import { useTransition } from "react";
 
 const ActionButtons = ({ fromDetails, eventId, event }) => {
   const { auth } = useAuth();
+  console.log("auth", auth);
+  
   const [isPending, startTransition] = useTransition();
 
   const isInterested = auth && event?.interested_ids?.includes(auth.id);
@@ -34,7 +36,7 @@ const ActionButtons = ({ fromDetails, eventId, event }) => {
 
       {auth ? (
         <Link
-          href="/payment"
+          href={`/payment/${eventId}`}
           className="text-center w-full bg-[#464849] py-2 px-2 rounded-md border border-[#5F5F5F]/50 shadow-sm cursor-pointer hover:bg-[#3C3D3D] transition-colors active:translate-y-1"
         >
           Going
