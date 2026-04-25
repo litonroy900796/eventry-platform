@@ -28,7 +28,7 @@ export default async function RootLayout({ children }) {
         <NextAuthProvider> {/* 👈 */}
           <AuthProvider>
             <Navbar />
-            <main className="py-8">{children}</main>
+            <main className="lg:py-8 md:py-6 py-4">{children}</main>
           </AuthProvider>
         </NextAuthProvider>
       </body>

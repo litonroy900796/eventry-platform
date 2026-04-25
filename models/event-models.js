@@ -5,17 +5,28 @@ const schema = new Schema({
   details: { required: true, type: String },
   location: { required: true, type: String },
   imageUrl: { required: true, type: String },
-  interested_ids: { required: false, type: Array },
-  going_ids: { required: false, type: Array },
+  date: { required: true, type: Date },
+  time: { required: true, type: String },
+  ticketPrice: { type: Number, default: 0 },
+  capacity: { type: Number, default: null },
+  category: {
+    type: String,
+    enum: ["Technology", "Business", "Music", "Sports", "Arts", "Education", "Other"],
+    default: "Other",
+  },
+  website: { type: String, default: "" },
+  organizer: { type: String, default: "" },
+  interested_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
+  going_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
   swags: { required: false, type: Array },
   status: {
     type: String,
     enum: ["pending", "approved", "rejected"],
-    default: "pending", // 👈
+    default: "pending",
   },
   rejectionReason: { type: String, default: "" },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" }, // 👈 kon user create korece
-});
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
+}, { timestamps: true });
 
-export const eventModel =
-  mongoose.models.events ?? mongoose.model("events", schema);
+delete mongoose.models.events;
+export const eventModel = mongoose.model("events", schema);
