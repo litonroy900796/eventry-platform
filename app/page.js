@@ -4,9 +4,9 @@ import { getAllEvents } from "@/lib/query";
 
 import Image from "next/image";
 
-export default async function Home() {
-  const events = await getAllEvents();
-  console.log(events);
+export default async function Home({ searchParams }) {
+const { search } = await searchParams;
+  const events = await getAllEvents(search ?? "");
 
   return (
     <section className="container mx-auto">
