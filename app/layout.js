@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import connectDB from "@/lib/mongodb";
 import { AuthProvider } from "@/providers/AuthProvider";
+import NextAuthProvider from "@/providers/NextAuthProvider"; // 👈
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,14 +24,13 @@ export default async function RootLayout({ children }) {
   await connectDB();
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-      <AuthProvider>
-        <Navbar />
-        <main className="py-8">{children}</main>
-
-      </AuthProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <NextAuthProvider> {/* 👈 */}
+          <AuthProvider>
+            <Navbar />
+            <main className="py-8">{children}</main>
+          </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

@@ -4,10 +4,11 @@ import { toggleInterest } from "@/lib/actions/event.action";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { useTransition } from "react";
+import { useSession } from "next-auth/react";
 
 const ActionButtons = ({ fromDetails, eventId, event }) => {
-  const { auth } = useAuth();
-  console.log("auth", auth);
+  const { data: session } = useSession(); // 👈
+  const auth = session?.user; // 👈
   
   const [isPending, startTransition] = useTransition();
 

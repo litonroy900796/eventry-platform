@@ -1,14 +1,18 @@
 "use client";
-import { useAuth } from "@/hooks/useAuth";
+
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/./public/logo.png";
 
 const Navbar = () => {
-  const { auth, setAuth } = useAuth();
- console.log("auth", auth);
-  const handleLogout = () => {
-    setAuth(null);
+  const { data: session } = useSession();
+
+  console.log("Session in Navbar:", session); // Session data দেখাও
+  
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: "/" });
   };
 
   return (
@@ -24,9 +28,9 @@ const Navbar = () => {
           <li>About</li>
           <li>Contact Us</li>
 
-          {auth ? (
+          {session?.user ? (
             <>
-              <li className="text-white font-medium">{auth.name}</li>
+              <li className="text-white font-medium">{session.user.name}</li>
               <li>
                 <button
                   onClick={handleLogout}
