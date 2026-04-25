@@ -18,10 +18,12 @@ async function EventDetail({ params }) {
     <div>
       <HeroSection event={eventInfo} />
       <section className="container">
-        <div className="grid grid-cols-5 gap-12 my-12">
-          <EventDetails event={eventInfo} />
-          <EventVenue event={eventInfo} />
-        </div>
+        <section className="container">
+  <div className="grid grid-cols-12 gap-6 lg:gap-12 my-12">
+    <EventDetails event={eventInfo} />
+    <EventVenue event={eventInfo} />
+  </div>
+</section>
       </section>
     </div>
   );

@@ -1,19 +1,8 @@
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config"; // 👈 auth.js না, auth.config.js
 
-export default auth((req) => {
-  const { pathname } = req.nextUrl;
-
-  // login ছাড়া payment এ যেতে পারবে না
-  if (pathname.startsWith("/payment") && !req.auth) {
-    return Response.redirect(new URL("/login", req.url));
-  }
-
-  // admin ছাড়া dashboard এ যেতে পারবে না
-  if (pathname.startsWith("/dashboard") && req.auth?.user?.role !== "admin") {
-    return Response.redirect(new URL("/", req.url));
-  }
-});
+export default NextAuth(authConfig).auth;
 
 export const config = {
-  matcher: ["/payment/:path*", "/dashboard/:path*"],
+  matcher: ["/payment/:path*", "/dashboard/:path*", "/my-events/:path*"],
 };
